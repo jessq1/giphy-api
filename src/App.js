@@ -7,14 +7,15 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      query: '&t=',
-      searchURL: ''
+      apikey: 'apikey=' + process.env.REACT_APP_APIKEY,
+      searchURL: '',
+      giphTitle:'',
     }
   }
   handleSubmit = (event)=>{
     event.preventDefault()
 
-    const url = `https://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_APIKEY}&q=${event.target.giphy.value}&limit=25&offset=0&rating=g&lang=en`
+    const url = `https://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_APIKEY}&q=${event.target.giphy.value}&limit=5&offset=0&rating=g&lang=en`
 
     this.setState({
           searchURL: url
@@ -24,6 +25,7 @@ class App extends Component {
               return response.json()
             }).then(json => this.setState({
               giphy: json,
+              giphTitle:'',
             }),
             err => console.log(err))
         })
@@ -37,10 +39,9 @@ class App extends Component {
               id='giphy'
               type='text'
             />
-            <input
+            <button
               type='submit'
-              value='Find'
-            />
+            >Find </button>
           </form>
           {(this.state.giphy)
         ? <Giphy giphy={this.state.giphy} />

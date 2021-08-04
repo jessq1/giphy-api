@@ -1,14 +1,17 @@
-import { Component } from 'react';
 
-class Giphy extends Component {
-    render () {
-      return  (
+function Giphy(props){
+    return  (
         <div>
-          <h1>Title: {this.props.movie.Title}</h1>
-          
+          {props.giphy.data.map((data, index) => {
+                return (
+                    <div key={index}>
+                        <img src={data.images.original.url} alt="Alt text"></img>
+                    </div>
+                    );
+                })}
         </div>
       )
-    }
-  }
+}
+
 
   export default Giphy;
